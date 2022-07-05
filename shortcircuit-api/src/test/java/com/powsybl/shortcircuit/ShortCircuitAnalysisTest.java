@@ -122,9 +122,9 @@ public class ShortCircuitAnalysisTest {
         List<ReporterModel> subReporters = reporter.getSubReporters();
         assertEquals(1, subReporters.size());
         ReporterModel subReporter = subReporters.get(0);
-        assertEquals("MockShortCircuit", subReporter.getTaskKey());
+        assertEquals("MockShortCircuit", subReporter.getReporterKey());
         assertEquals("Running mock short circuit", subReporter.getDefaultName());
-        assertTrue(subReporter.getReports().isEmpty());
+        assertTrue(subReporter.getReportMessages().isEmpty());
     }
 
     @Test
