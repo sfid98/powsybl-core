@@ -6,6 +6,7 @@
  */
 package com.powsybl.shortcircuit;
 
+import com.powsybl.commons.reporter.ReportNode;
 import com.powsybl.commons.reporter.ReporterModel;
 import com.powsybl.computation.ComputationManager;
 import com.powsybl.iidm.network.Network;
@@ -14,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -119,12 +121,15 @@ public class ShortCircuitAnalysisTest {
         ReporterModel reporter = new ReporterModel("testReportShortCircuit", "Test mock short circuit");
         ShortCircuitAnalysisResult result = ShortCircuitAnalysis.run(network, faults, shortCircuitParameters, computationManager, faultParameters, reporter);
         assertNotNull(result);
-        List<ReporterModel> subReporters = reporter.getSubReporters();
-        assertEquals(1, subReporters.size());
-        ReporterModel subReporter = subReporters.get(0);
+        Collection<ReportNode> children = reporter.getChildren();
+        assertEquals(1, children.size());
+
+        ReportNode node = children.iterator().next();
+        assertTrue(node instanceof ReporterModel);
+        ReporterModel subReporter = (ReporterModel) node;
         assertEquals("MockShortCircuit", subReporter.getKey());
-        assertEquals("Running mock short circuit", subReporter.getDefaultTitle());
-        assertTrue(subReporter.getReportMessages().isEmpty());
+        assertEquals("Running mock short circuit", subReporter.getDefaultText());
+        assertTrue(subReporter.getChildren().isEmpty());
     }
 
     @Test

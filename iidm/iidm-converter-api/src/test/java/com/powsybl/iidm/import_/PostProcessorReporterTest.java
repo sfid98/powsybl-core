@@ -7,10 +7,7 @@
 package com.powsybl.iidm.import_;
 
 import com.powsybl.commons.AbstractConverterTest;
-import com.powsybl.commons.reporter.ReportMessage;
-import com.powsybl.commons.reporter.ReporterModel;
-import com.powsybl.commons.reporter.ReporterModelDeserializer;
-import com.powsybl.commons.reporter.ReporterModelSerializer;
+import com.powsybl.commons.reporter.*;
 import com.powsybl.computation.ComputationManager;
 import com.powsybl.iidm.network.Network;
 import com.powsybl.iidm.network.NetworkFactory;
@@ -41,7 +38,7 @@ public class PostProcessorReporterTest extends AbstractConverterTest {
         Network network1 = importer1.importData(null, NetworkFactory.findDefault(), null, reporter);
         assertNotNull(network1);
 
-        Optional<ReportMessage> report = reporter.getReportMessages().stream().findFirst();
+        Optional<ReportNode> report = reporter.getChildren().stream().findFirst();
         assertTrue(report.isPresent());
 
         roundTripTest(reporter, ReporterModelSerializer::write, ReporterModelDeserializer::read, "/postProcessorReporterTest.json");
