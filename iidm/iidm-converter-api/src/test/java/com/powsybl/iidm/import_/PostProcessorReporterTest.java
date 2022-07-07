@@ -38,7 +38,7 @@ public class PostProcessorReporterTest extends AbstractConverterTest {
         Network network1 = importer1.importData(null, NetworkFactory.findDefault(), null, reporter);
         assertNotNull(network1);
 
-        Optional<ReportNode> report = reporter.getChildren().stream().findFirst();
+        Optional<MessageNode> report = reporter.getChildren().stream().findFirst();
         assertTrue(report.isPresent());
 
         roundTripTest(reporter, ReporterModelSerializer::write, ReporterModelDeserializer::read, "/postProcessorReporterTest.json");
